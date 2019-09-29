@@ -13,8 +13,8 @@ The 3rd step for preparation is to decide from which repository you want to clon
 
 Till now you should have already created a folder under *repos* directory with relevant info filled in. Now you can start up a docker container to help you sync your repos from upstream git server to downserver git server peirodically. For example:
 > 
-> docker run -d --name repo-sync-<repo-org-name> \
->               -v "$PWD/repos/<repo-org-name>:/repo" \
+> docker run -d --name repo-sync-repo-org-name \
+>               -v "$PWD/repos/repo-org-name:/repo" \
 >                   kevinwangcy/reposync:latest \
 >               -e UPSTREAM_USERNAME='$UPSTREAM_USERNAME' \
 >               -e UPSTREAM_PASSWORD='$UPSTREAM_PASSWORD' \
@@ -22,5 +22,5 @@ Till now you should have already created a folder under *repos* directory with r
 >               -e DOWNSTREAM_USERNAME='$DOWNSTREAM_USERNAME' \
 >               -e DOWNSTREAM_PASSWORD='$DOWNSTREAM_PASSWORD'
 >
-*Note:* <repo-org-name> is the folder name you created at above 3rd step.
+*Note:* repo-org-name is the folder name you created at above 3rd step.
 
