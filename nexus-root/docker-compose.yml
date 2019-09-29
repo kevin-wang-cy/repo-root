@@ -1,0 +1,18 @@
+
+version: '3'
+
+services:
+  nginx-proxy:
+    build: ./nginx
+    ports:
+      - '${EXPOSED_NEXUS_PORT:-55443}:443'
+      - '${EXPOSED_DOCKER_PORT:-55000}:5000'
+    links:
+      - nexus-repository
+    command: [ nginx, '-g', 'daemon off;' ]
+
+  nexus-repository:
+    image: sonatype/nexus3
+    volumes:
+      - './nexus-data:/nexus-data'
+
