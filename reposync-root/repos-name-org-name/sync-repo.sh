@@ -161,7 +161,7 @@ function updateDownstreamMirror() {
     status=1
 
     if [ -d "$DATADIR_REPO/$repoName.git" ]; then        
-        (ssh-add -D && ssh-add "$DATADIR_SSH/id_rsa_downstream" && cd "$DATADIR_REPO/$repoName.git" && git push --mirror "$DOWNSTREAM_SSH_GIT/$DOWNSTREAM_ORGNAME/$repoName.git") 2>&1
+        (ssh-add -D && ssh-add "$DATADIR_SSH/id_rsa_downstream" && cd "$DATADIR_REPO/$repoName.git" && [ ! -z "$(git branch -a)" ] && git push --mirror "$DOWNSTREAM_SSH_GIT/$DOWNSTREAM_ORGNAME/$repoName.git" || echo "SKIPPED updating downstream mirror due to upstream is empty.") 2>&1
 
         status=$?
 
