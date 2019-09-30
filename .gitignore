@@ -2,3 +2,10 @@
 reposync-root/repos-name-org-name/ssh/
 reposync-root/repos/
 
+# ignore gitea server generated local files
+gitea-root/gitea/
+gitea-root/mysql/
+
+# ignore nexus server generated local files
+nexus-root/nexus-data/
+
