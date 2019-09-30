@@ -1,5 +1,34 @@
 #!/bin/bash
 
+# repos/
+#   - <github-org name>
+#       - sync-repo.sh
+#       - repo
+#           - <repo Name 1>.git
+#           - <repo Name 2>.git
+#       - ssh
+#           - id_rsa_upstream
+#           - id_rsa_upstream.pub
+#           - id_rsa_downstream
+#           - id_rsa_downstream.pub
+#   - <git-labs-quest-org name>
+#       - sync-repo.sh
+#       - repo
+#           - <repo Name x>.git
+#       - ssh
+#           - id_rsa_upstream
+#           - id_rsa_upstream.pub
+#           - id_rsa_downstream
+#           - id_rsa_downstream.pub
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DATADIR_SSH="$SCRIPT_DIR/ssh"
+DATADIR_REPO="$SCRIPT_DIR/repo"
+
+mkdir -p $DATADIR_REPO
+
+# load repos info and their credentials
+[ -f $DATADIR_SSH/.env ] && source "$DATADIR_SSH/.env"
+
 # Up Stream Info
 UPSTREAM_USERNAME="${UPSTREAM_USERNAME:="--no user name--"}"
 UPSTREAM_PASSWORD="${UPSTREAM_PASSWORD:="--no password--"}"
@@ -27,44 +56,18 @@ DOWNSTREAM_SSH_GIT="ssh://git@$DOWNSTREAM_HOSTNAME:$DOWNSTREAM_SSHPORT"
 
 # Repo Exclusion
 EXCLUDED_REPOS_STR="${EXCLUDED_REPOS:="--space-seperated-repo-names--"}"
-
+EXCLUDED_REPOS=()
 IFS=' ' read -a EXCLUDED_REPOS <<< "${EXCLUDED_REPOS_STR}"
 
 # DIRECTION : ALL | ONLY_UPSTREAM | ONLY_DOWNSTREAM
 DIRECTION="ALL"
-
-# repos/
-#   - <github-org name>
-#       - sync-repo.sh
-#       - repo
-#           - <repo Name 1>.git
-#           - <repo Name 2>.git
-#       - ssh
-#           - id_rsa_upstream
-#           - id_rsa_upstream.pub
-#           - id_rsa_downstream
-#           - id_rsa_downstream.pub
-#   - <git-labs-quest-org name>
-#       - sync-repo.sh
-#       - repo
-#           - <repo Name x>.git
-#       - ssh
-#           - id_rsa_upstream
-#           - id_rsa_upstream.pub
-#           - id_rsa_downstream
-#           - id_rsa_downstream.pub
-SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-DATADIR_SSH="$SCRIPT_DIR/ssh"
-DATADIR_REPO="$SCRIPT_DIR/repo"
-
-mkdir -p $DATADIR_REPO
 
 # Print Usage
 function usage() {
     echo "  "
     echo "Description"
     echo "  "
-    echo "  First, change the [Up Stream Info] and [Down Stream Info] in sync-repo.sh to right info."
+    echo "  First, create a file [$DATADIR_SSH/.env] to include [Up Stream Info] and [Down Stream Info]."
     echo "  Second, generate no password protection ssh keys into [$DATADIR_SSH] folder."
     echo "      Note: "
     echo "          [1] id_rsa_upstream is for up stream repo and id_rsa_downstream for down stream repo."

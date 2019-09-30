@@ -4,7 +4,9 @@ First create a folder for your repositories. For example:
 Then copy all file in ../repos-name-org-name into the folder created in above.
 > cp -r ../repos-name-org-name ./** ./github-ibalabala
 
-After then you can run the sync-repo.sh to download your repos as local mirror and then put to downstream repo when necessary. For example:
-> ./sync-repo.sh 
+Then you can run below command in the .github-ibalabala to get some tips on how to get ready to start sync your repos.
+> ./sync-repo.sh help 
+
+When you got you .env file and ssh ids ready, you're ready to go.
 
 For detail please check the usage in the script itself.
