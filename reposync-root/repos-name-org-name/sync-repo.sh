@@ -179,7 +179,7 @@ function updateDownstreamMirror() {
 function skipRepo() {
     repoName=$1
 
-    if [[ " ${EXCLUDED_REPOS[*]} " == *"$repoName"* ]];
+    if [[ " ${EXCLUDED_REPOS[*]} " == *" $repoName "* ]];
     then
         echo "true"
     else
