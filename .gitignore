@@ -1,4 +1,4 @@
 # ignore ssh
 reposync-root/repos-name-org-name/ssh/
-reposync-root/repos/*/ssh/
+reposync-root/repos/
 
